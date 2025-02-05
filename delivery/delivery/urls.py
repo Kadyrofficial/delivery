@@ -9,22 +9,23 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="API Documentation",
+        title="API Documentation of Delivery Platform",
         default_version='v1',
-        description="API documentation using Swagger",
-        terms_of_service="https://www.example.com/terms/",
-        contact=openapi.Contact(email="support@example.com"),
-        license=openapi.License(name="BSD License"),
+        description="For Front-End Developer Kerim Gullyyev",
+        # terms_of_service="https://www.example.com/terms/",
+        contact=openapi.Contact(email="kadyr.gullyyew@gmail.com"),
+        # license=openapi.License(name="BSD License"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/<str:lang>/products', include('products.urls')),
+
+    path('api/<str:lang>/products/', include('products.urls')),
+
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc-ui'),
-    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger.json', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
