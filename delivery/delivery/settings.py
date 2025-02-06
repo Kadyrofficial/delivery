@@ -16,9 +16,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
+    "corsheaders",
     'drf_yasg',
+    'catalogues',
+    "accounts",
+    "restaurants",
     'products',
+    'locations',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
