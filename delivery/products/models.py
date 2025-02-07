@@ -34,7 +34,6 @@ class Product(models.Model):
     objects = models.Manager() 
     active_products = ActiveProduct()
 
-
     def __str__(self):
         return self.title_tm
 

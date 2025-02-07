@@ -4,7 +4,7 @@ from unidecode import unidecode
 from django.utils.text import slugify
 from locations.models import CityProvince, EtrapCity, AddressLine
 from django.core.exceptions import ValidationError
-
+from accounts.models import User
 
 def restaurant_image_upload_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -21,7 +21,8 @@ class Restaurant(models.Model):
     city_province = models.ForeignKey(CityProvince, verbose_name="CityProvince", on_delete=models.CASCADE, related_name="location_city_province")
     etrap_city = models.ForeignKey(EtrapCity, verbose_name="EtrapCity", on_delete=models.CASCADE, related_name="location_etrap_city")
     address_line = models.ForeignKey(AddressLine, verbose_name="AddressLine", on_delete=models.CASCADE, related_name="location_address_line")
-
+    user = models.ForeignKey(User, verbose_name="Restaurant User", on_delete=models.CASCADE, related_name="restaurant")
+    
     def __str__(self):
         return self.title_tm
     
@@ -34,4 +35,6 @@ class Restaurant(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = unidecode(slugify(self.title_tm))
+        if self.user.is_restaurant_customer == False:
+            raise ValidationError("You can choose only Restaurant User")
         super().save(*args, **kwargs)

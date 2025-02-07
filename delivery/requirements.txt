@@ -5,3 +5,4 @@ django-cors-headers
 unidecode
 drf-yasg
 django-filter
+djangorestframework-simplejwt
