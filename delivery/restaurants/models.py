@@ -2,7 +2,7 @@ from django.db import models
 import uuid
 from unidecode import unidecode
 from django.utils.text import slugify
-from locations.models import CityProvince, EtrapCity, AddressLine
+from locations.models import Location, Address
 from django.core.exceptions import ValidationError
 from accounts.models import User
 
@@ -18,19 +18,15 @@ class Restaurant(models.Model):
     image = models.ImageField(upload_to=restaurant_image_upload_path)
     slug = models.SlugField(unique=True, blank=True, editable=False)
     active_status = models.BooleanField(default=False)
-    city_province = models.ForeignKey(CityProvince, verbose_name="CityProvince", on_delete=models.CASCADE, related_name="location_city_province")
-    etrap_city = models.ForeignKey(EtrapCity, verbose_name="EtrapCity", on_delete=models.CASCADE, related_name="location_etrap_city")
-    address_line = models.ForeignKey(AddressLine, verbose_name="AddressLine", on_delete=models.CASCADE, related_name="location_address_line")
+    location = models.ForeignKey(Location, verbose_name="Location", on_delete=models.CASCADE, related_name="restaurant_location", blank=True, null=True)
+    address = models.ForeignKey(Address, verbose_name="Address", on_delete=models.CASCADE, related_name="restaurant_address", blank=True, null=True)
     user = models.ForeignKey(User, verbose_name="Restaurant User", on_delete=models.CASCADE, related_name="restaurant")
     
     def __str__(self):
         return self.title_tm
     
     def clean(self):
-        if self.etrap_city.city_province != self.city_province:
-            raise ValidationError("Selected Etrap City does not belong to the selected City Province.")
-
-        if self.address_line.etrap_city != self.etrap_city:
+        if self.address.location != self.location:
             raise ValidationError("Selected Address Line does not belong to the selected Etrap City.")
 
     def save(self, *args, **kwargs):

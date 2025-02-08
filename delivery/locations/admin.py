@@ -1,39 +1,21 @@
 from django.contrib import admin
-from .models import CityProvince, EtrapCity, AddressLine
-
-
-# class CityProvinceInline(admin.TabularInline):
-#     model = CityProvince
-#     extra = 1
-
-
-
-class EtrapCityInline(admin.TabularInline):
-    model = EtrapCity
-    extra = 1
-
-class CityProvinceAdmin(admin.ModelAdmin):
-    list_display = ["id", "title_tm", "title_ru"]
-    list_editable = ["title_tm", "title_ru"]
-    inlines = [EtrapCityInline]
-
-admin.site.register(CityProvince, CityProvinceAdmin)
+from .models import Location, Address
 
 
 class AddressLineInline(admin.TabularInline):
-    model = AddressLine
+    model = Address
     extra = 1
 
-class EtrapCityAdmin(admin.ModelAdmin):
-    list_display = ["id", "title_tm", "title_ru", "city_province"]
-    list_editable = ["title_tm", "title_ru", "city_province"]
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ["id", "title_tm", "title_ru"]
+    list_editable = ["title_tm", "title_ru"]
     inlines = [AddressLineInline]
 
-admin.site.register(EtrapCity, EtrapCityAdmin)
+admin.site.register(Location, LocationAdmin)
 
 
-class AddressLineAdmin(admin.ModelAdmin):
-    list_display = ["id", "title_tm", "title_ru", "etrap_city"]
-    list_editable = ["title_tm", "title_ru", "etrap_city"]
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ["id", "title_tm", "title_ru", "location"]
+    list_editable = ["title_tm", "title_ru", "location"]
 
-admin.site.register(AddressLine, AddressLineAdmin)
+admin.site.register(Address, AddressAdmin)

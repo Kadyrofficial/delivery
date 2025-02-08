@@ -1,70 +1,49 @@
 from rest_framework import viewsets
-from .models import CityProvince, EtrapCity, AddressLine
-from .serializers import CityProvinceSerializer, CityProvinceListSerializer, CityProvinceRetrieveSerializer, EtrapCitySerializer, EtrapCityListSerializer, EtrapCityRetrieveSerializer, AddressLineSerializer, AddressLineListSerializer, AddressLineRetrieveSerializer
+from .models import Location, Address
+from .serializers import LocationSerializer, LocationListSerializer, LocationRetrieveSerializer, AddressSerializer, AddressListSerializer, AddressRetrieveSerializer
 from rest_framework import viewsets, filters
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAdminUserOrReadOnly
 
 
-class CityProvincePagination(PageNumberPagination):
+class LocationPagination(PageNumberPagination):
     page_size = 20
     page_size_query_param = 'page_size'
 
-class CityProvinceViewSet(viewsets.ModelViewSet):
-    queryset = CityProvince.objects.all()
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
     lookup_field = "slug"
-    pagination_class = CityProvincePagination
+    pagination_class = LocationPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['title_tm', 'title_ru']
     permission_classes = [IsAdminUserOrReadOnly]
-    serializer_class = CityProvinceSerializer
+    serializer_class = LocationSerializer
 
     def get_serializer_class(self):
         if self.action == "list":
-            return CityProvinceListSerializer
+            return LocationListSerializer
         if self.action == "retrieve":
-            return CityProvinceRetrieveSerializer
+            return LocationRetrieveSerializer
         return super().get_serializer_class()
 
 
-class EtrapCityPagination(PageNumberPagination):
+class AddressPagination(PageNumberPagination):
     page_size = 20
     page_size_query_param = 'page_size'
 
-class EtrapCityViewSet(viewsets.ModelViewSet):
-    queryset = EtrapCity.objects.all()
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
     lookup_field = "slug"
-    pagination_class = EtrapCityPagination
+    pagination_class = AddressPagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['title_tm', 'title_ru']
     permission_classes = [IsAdminUserOrReadOnly]
-    serializer_class = EtrapCitySerializer
+    serializer_class = AddressSerializer
 
     def get_serializer_class(self):
         if self.action == "list":
-            return EtrapCityListSerializer
+            return AddressListSerializer
         if self.action == "retrieve":
-            return EtrapCityRetrieveSerializer
-        return super().get_serializer_class()
-
-
-class AddressLinePagination(PageNumberPagination):
-    page_size = 20
-    page_size_query_param = 'page_size'
-
-class AddressLineViewSet(viewsets.ModelViewSet):
-    queryset = AddressLine.objects.all()
-    lookup_field = "slug"
-    pagination_class = AddressLinePagination
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ['title_tm', 'title_ru']
-    permission_classes = [IsAdminUserOrReadOnly]
-    serializer_class = AddressLineSerializer
-
-    def get_serializer_class(self):
-        if self.action == "list":
-            return AddressLineListSerializer
-        if self.action == "retrieve":
-            return AddressLineRetrieveSerializer
+            return AddressRetrieveSerializer
         return super().get_serializer_class()

@@ -1,18 +1,18 @@
 from rest_framework import serializers
-from .models import CityProvince, EtrapCity, AddressLine
+from .models import Location, Address
 
 
-class AddressLineSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AddressLine
+        model = Address
         fields = '__all__'
 
 
-class AddressLineListSerializer(serializers.ModelSerializer):
+class AddressListSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
 
     class Meta:
-        model = AddressLine
+        model = Address
         fields = ['id', 'title', 'slug']
 
     def get_title(self, obj):
@@ -20,11 +20,11 @@ class AddressLineListSerializer(serializers.ModelSerializer):
         return getattr(obj, f"title_{lang}")
 
 
-class AddressLineRetrieveSerializer(serializers.ModelSerializer):
+class AddressRetrieveSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     
     class Meta:
-        model = AddressLine
+        model = Address
         fields = ['id', 'title', 'slug']
 
     def get_title(self, obj):
@@ -32,17 +32,17 @@ class AddressLineRetrieveSerializer(serializers.ModelSerializer):
         return getattr(obj, f"title_{lang}")
 
 
-class EtrapCitySerializer(serializers.ModelSerializer):
+class LocationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = EtrapCity
+        model = Location
         fields = '__all__'
 
 
-class EtrapCityListSerializer(serializers.ModelSerializer):
+class LocationListSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
 
     class Meta:
-        model = EtrapCity
+        model = Location
         fields = ['id', 'title', 'slug']
 
     def get_title(self, obj):
@@ -50,44 +50,13 @@ class EtrapCityListSerializer(serializers.ModelSerializer):
         return getattr(obj, f"title_{lang}")
 
 
-class EtrapCityRetrieveSerializer(serializers.ModelSerializer):
+class LocationRetrieveSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
-    address_line = AddressLineListSerializer(many=True)
+    location = AddressListSerializer(many=True)
     
     class Meta:
-        model = EtrapCity
-        fields = ['id', 'title', 'address_line', 'slug']
-
-    def get_title(self, obj):
-        lang = self.context.get("lang")
-        return getattr(obj, f"title_{lang}")
-
-
-class CityProvinceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CityProvince
-        fields = '__all__'
-
-
-class CityProvinceListSerializer(serializers.ModelSerializer):
-    title = serializers.SerializerMethodField()
-    
-    class Meta:
-        model = CityProvince
-        fields = ['id', 'title', 'slug']
-
-    def get_title(self, obj):
-        lang = self.context.get("lang")
-        return getattr(obj, f"title_{lang}")
-
-
-class CityProvinceRetrieveSerializer(serializers.ModelSerializer):
-    title = serializers.SerializerMethodField()
-    etrap_city = EtrapCityListSerializer(many=True)
-    
-    class Meta:
-        model = CityProvince
-        fields = ['id', 'title', 'etrap_city', 'slug']
+        model = Location
+        fields = ['id', 'title', 'location', 'slug']
 
     def get_title(self, obj):
         lang = self.context.get("lang")
