@@ -11,12 +11,12 @@ from banners.views import AppBannerViewSet, WebBannerViewSet
 from locations.views import LocationViewSet
 
 
-app_router = routers.DefaultRouter()
-app_router.register(r'accounts', UserViewSet, basename='accounts')
-app_router.register(r'banners', AppBannerViewSet, basename='banners')
-app_router.register(r'restaurants', RestaurantViewSet, basename='restaurants')
-app_router.register(r'products', ProductViewSet, basename='products')
-app_router.register(r'locations', LocationViewSet, basename='locations')
+router = routers.DefaultRouter()
+router.register(r'accounts', UserViewSet, basename='accounts')
+router.register(r'banners', AppBannerViewSet, basename='banners')
+router.register(r'restaurants', RestaurantViewSet, basename='restaurants')
+router.register(r'products', ProductViewSet, basename='products')
+router.register(r'locations', LocationViewSet, basename='locations')
 
 # web_api = routers.DefaultRouter()
 # web_api.register(r'banners', WebBannerViewSet, basename='banners')
@@ -24,6 +24,6 @@ app_router.register(r'locations', LocationViewSet, basename='locations')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('app_api/', include(app_router.urls)),
+    path('api/', include(router.urls)),
     # path('web_api/', include(web_api.urls))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
