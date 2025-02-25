@@ -20,7 +20,7 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         if self.action == 'list':
-            return RestaurantListSerializer if self.request.headers.get('Location') else RestaurantListStaticSerializer
+            return RestaurantListSerializer
         return super().get_serializer_class()
 
 
