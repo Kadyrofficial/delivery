@@ -18,12 +18,12 @@ app_router.register(r'restaurants', RestaurantViewSet, basename='restaurants')
 app_router.register(r'products', ProductViewSet, basename='products')
 app_router.register(r'locations', LocationViewSet, basename='locations')
 
-web_api = routers.DefaultRouter()
-web_api.register(r'banners', WebBannerViewSet, basename='banners')
-web_api.register(r'restaurants', WebRestaurantViewSet, basename='restaurants')
+# web_api = routers.DefaultRouter()
+# web_api.register(r'banners', WebBannerViewSet, basename='banners')
+# web_api.register(r'restaurants', WebRestaurantViewSet, basename='restaurants')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app_api/', include(app_router.urls)),
-    path('web_api/', include(web_api.urls))
+    # path('web_api/', include(web_api.urls))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
