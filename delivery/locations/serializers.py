@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Location, Address
+from .models import Location
 
+# App
 
-class LocationForAppRestaurantSerializer(serializers.ModelSerializer):
+class LocationSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     
     class Meta:
