@@ -5,13 +5,14 @@ from django.utils.text import slugify
 from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
-
+from restaurants.models import Restaurant
 
 class Banner(models.Model):
     thumbnail = models.ImageField(null=True, blank=True, editable=False)
     image = models.ImageField(null=True, blank=True, editable=False)
     original_image = models.ImageField(null=True, blank=True)
     date_added = timezone.now()
+    restaurant = models.ForeignKey(Restaurant, verbose_name="Restaurant", on_delete=models.CASCADE, related_name='banner')
     
     def save(self, lg=1000, sm=400, originals='banners/', images='banners/images/', thumbnails='banners/thumbnails/', *args, **kwargs):
         if not self.pk:

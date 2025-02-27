@@ -8,13 +8,13 @@ class ProductInline(admin.StackedInline):
     extra = 1
 
 class RestaurantAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title_tm', 'title_ru', 'phone_number', 'original_image', 'location', 'address', 'is_active', 'is_online', 'is_top', 'is_delivery_free', 'user']
-    list_editable = ['title_tm', 'title_ru', 'phone_number', 'original_image', 'location', 'address', 'is_active', 'is_online', 'is_top', 'is_delivery_free', 'user']
+    list_display = ['id', 'title_tm', 'title_ru', 'phone_number', 'original_image', 'location', 'address', 'is_active', 'is_online', 'is_top', 'is_delivery_free', 'is_new', 'user']
+    list_editable = ['title_tm', 'title_ru', 'phone_number', 'original_image', 'location', 'address', 'is_active', 'is_online', 'is_top', 'is_delivery_free', 'is_new', 'user']
     fieldsets = (
         ('Title', {'fields': ('title_tm', 'title_ru')}),
-        ('Details', {'fields': ('phone_number', 'original_image', 'image', 'thumbnail', 'location', 'address', 'user', 'is_active', 'is_online', 'is_top', 'is_delivery_free')}),
+        ('Details', {'fields': ('phone_number', 'original_image', 'image', 'thumbnail', 'location', 'address', 'user', 'is_active', 'is_online', 'is_top', 'is_delivery_free', 'is_new')}),
     )
     readonly_fields = ('image', 'thumbnail')
-    list_filter = ['location', 'is_active', 'is_online', 'is_top', 'is_delivery_free']
+    list_filter = ['location', 'is_active', 'is_online', 'is_top', 'is_delivery_free', 'is_new']
     inlines = [ProductInline]
 admin.site.register(Restaurant, RestaurantAdmin)
