@@ -33,7 +33,6 @@ class Restaurant(models.Model):
         return self.title_tm
     
     def clean(self):
-        super().clean()
         if self.address.location != self.location:
             raise ValidationError("Selected Address Line does not belong to the selected Etrap City.")
         if self.user.type != self.user.UserType.CLIENT:

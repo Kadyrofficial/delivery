@@ -79,6 +79,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.new_password:
             self.set_password(self.new_password)
             self.new_password = None
+        if self.type == self.UserType.CLIENT:
+            if self.restaurant.exists():
+                for restaurant in self.restaurant.all():
+                    restaurant.save()
         super().save(*args, **kwargs)
 
     def save_super(self, *args, **kwargs):
