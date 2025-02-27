@@ -3,7 +3,11 @@ from .serializers import RestaurantSerializer, RestaurantListSerializer, Restaur
 from .models import Restaurant
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.pagination import PageNumberPagination
 
+
+class Pagination(PageNumberPagination):
+    page_size_query_param = 'page_size'
 
 class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Restaurant.objects.filter(is_active=True)
@@ -12,6 +16,7 @@ class RestaurantViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['title_tm', 'title_ru']
     filterset_fields = ['is_top', 'is_delivery_free', 'is_new']
+    pagination_class = Pagination
     
     def get_queryset(self):
         request = self.request
