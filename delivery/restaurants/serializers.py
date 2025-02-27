@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import Restaurant
 from products.serializers import ProductLessDetailSerializer
 from catalogues.serializers import CatalogueListSerializer, CatalogueSerializer
+
+
 # APP
 
 class RestaurantListSerializer(serializers.ModelSerializer):
@@ -25,7 +27,20 @@ class RestaurantListSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(obj.thumbnail.url)
         elif getattr(view, 'action', '') == 'retrieve':
             return request.build_absolute_uri(obj.image.url)
+
+
+class RestaurantForBannerSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
     
+    class Meta:
+        model = Restaurant
+        fields = ['id', 'title', 'slug']
+        
+    def get_title(self, obj):
+        request = self.context.get('request')
+        lang = request.headers.get('Accept-Language', 'tm') if request else 'tm'
+        return getattr(obj, f'title_{lang}', obj.title_tm)
+
 
 class RestaurantListStaticSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
