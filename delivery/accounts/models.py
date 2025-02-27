@@ -60,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email if self.email else self.phone_number
     
     def clean(self):
-        if self.address.location != self.location:
+        if self.location and self.address and self.address.location != self.location:
             raise ValidationError("Selected Address Line does not belong to the selected Etrap City.")
         
     def save(self, *args, **kwargs):

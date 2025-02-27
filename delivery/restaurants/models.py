@@ -33,12 +33,14 @@ class Restaurant(models.Model):
         return self.title_tm
     
     def clean(self):
+        super().clean()
         if self.address.location != self.location:
             raise ValidationError("Selected Address Line does not belong to the selected Etrap City.")
         if self.user.type != self.user.UserType.CLIENT:
             raise ValidationError("The user must be Client")
         
     def save(self, lg=1000, sm=400, originals='restaurants/', images='restaurants/images/', thumbnails='restaurants/thumbnails/', *args, **kwargs):
+        
         self.slug = unidecode(slugify(self.title_tm))
         if not self.pk:
             self.date_added = timezone.now()
