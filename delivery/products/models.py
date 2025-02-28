@@ -30,6 +30,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     is_popular = models.BooleanField(default=False)
     is_special = models.BooleanField(default=False)
+    discount_state = models.BooleanField(editable=False, blank=True)
     
     def __str__(self):
         return self.title_tm
@@ -37,7 +38,10 @@ class Product(models.Model):
     def save(self, lg=1000, sm=400, originals='products/', images='products/images/', thumbnails='products/thumbnails/', *args, **kwargs):
         self.slug = unidecode(slugify(self.title_tm))
         self.price = self.initial_price * (Decimal(1) - self.discount / Decimal(100))
-        
+        if self.discount == 0:
+            self.discount_state = False
+        if self.discount != 0:
+            self.discount_state = True
         if not self.pk:
             self.date_added = timezone.now()
         if self.pk:
