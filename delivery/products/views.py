@@ -13,7 +13,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ['title_tm', 'title_ru']
-    filterset_fields = ['discount_state']
+    filterset_fields = ['discount_state', 'restaurant']
     pagination_class = Pagination
     
     def get_queryset(self):
