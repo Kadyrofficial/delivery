@@ -65,12 +65,10 @@ class RestaurantSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     most_popular = serializers.SerializerMethodField()
     special_offers = serializers.SerializerMethodField()
-    catalogues_list = serializers.SerializerMethodField()
-    catalogues = serializers.SerializerMethodField()
     
     class Meta:
         model = Restaurant
-        fields = ['id', 'title', 'image', 'is_online', 'catalogues_list', 'most_popular', 'special_offers', 'catalogues']
+        fields = ['id', 'title', 'image', 'is_online', 'most_popular', 'special_offers']
         
     def get_title(self, obj):
         request = self.context.get('request')
@@ -93,14 +91,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
     def get_special_offers(self, obj):
         queryset = obj.products.filter(is_active=True, is_special=True)
         return ProductLessDetailSerializer(queryset, many=True, context=self.context).data
-    
-    def get_catalogues_list(self, obj):
-        queryset = obj.catalogues.all()
-        return CatalogueListSerializer(queryset, many=True, context=self.context).data
-    
-    def get_catalogues(self, obj):
-        queryset = obj.catalogues.all()
-        return CatalogueSerializer(queryset, many=True, context=self.context).data
+
 
 # WEB
 
