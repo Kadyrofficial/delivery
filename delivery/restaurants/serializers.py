@@ -1,10 +1,7 @@
 from rest_framework import serializers
 from .models import Restaurant
 from products.serializers import ProductSerializer
-from catalogues.serializers import CatalogueListSerializer
 
-
-# APP
 
 class RestaurantListSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
@@ -21,43 +18,7 @@ class RestaurantListSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         request = self.context.get('request')
-        view = self.context.get('view')
-        
-        if getattr(view, 'action', '') == 'list':
-            return request.build_absolute_uri(obj.thumbnail.url)
-        elif getattr(view, 'action', '') == 'retrieve':
-            return request.build_absolute_uri(obj.image.url)
-
-
-class RestaurantForBannerSerializer(serializers.ModelSerializer):
-    title = serializers.SerializerMethodField()
-    
-    class Meta:
-        model = Restaurant
-        fields = ['id', 'title', 'slug']
-        
-    def get_title(self, obj):
-        request = self.context.get('request')
-        lang = request.headers.get('Accept-Language', 'tm') if request else 'tm'
-        return getattr(obj, f'title_{lang}', obj.title_tm)
-
-
-class RestaurantListStaticSerializer(serializers.ModelSerializer):
-    image = serializers.SerializerMethodField()
-    
-    class Meta:
-        model = Restaurant
-        fields = ['id', 'title_tm', 'title_ru', 'image', 'is_top', 'is_delivery_free', 'is_online', 'slug']
-
-
-    def get_image(self, obj):
-        request = self.context.get('request')
-        view = self.context.get('view')
-        
-        if getattr(view, 'action', '') == 'list':
-            return request.build_absolute_uri(obj.thumbnail.url)
-        elif getattr(view, 'action', '') == 'retrieve':
-            return request.build_absolute_uri(obj.image.url)
+        return request.build_absolute_uri(obj.thumbnail.url)
 
 
 class RestaurantSerializer(serializers.ModelSerializer):
@@ -77,12 +38,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         request = self.context.get('request')
-        view = self.context.get('view')
-        
-        if getattr(view, 'action', '') == 'list':
-            return request.build_absolute_uri(obj.thumbnail.url)
-        elif getattr(view, 'action', '') == 'retrieve':
-            return request.build_absolute_uri(obj.image.url)
+        return request.build_absolute_uri(obj.thumbnail.url)
         
     def get_most_popular(self, obj):
         queryset = obj.products.filter(is_active=True, is_popular=True)
@@ -93,9 +49,14 @@ class RestaurantSerializer(serializers.ModelSerializer):
         return ProductSerializer(queryset, many=True, context=self.context).data
 
 
-# WEB
-
-class WebRestaurantListSerializer(serializers.ModelSerializer):
+class RestaurantForBannerSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+    
     class Meta:
         model = Restaurant
-        fields = ['id', 'title_tm', 'title_ru', 'image', 'slug']
+        fields = ['id', 'title', 'slug']
+        
+    def get_title(self, obj):
+        request = self.context.get('request')
+        lang = request.headers.get('Accept-Language', 'tm') if request else 'tm'
+        return getattr(obj, f'title_{lang}', obj.title_tm)

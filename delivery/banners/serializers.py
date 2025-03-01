@@ -8,9 +8,3 @@ class AppBannerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Banner
         fields = ['id', 'image', 'restaurant']
-
-
-class WebBannerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Banner
-        fields = ['id', 'image']
