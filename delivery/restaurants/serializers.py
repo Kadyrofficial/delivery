@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Restaurant
-from products.serializers import ProductLessDetailSerializer
-from catalogues.serializers import CatalogueListSerializer, CatalogueSerializer
+from products.serializers import ProductSerializer
+from catalogues.serializers import CatalogueListSerializer
 
 
 # APP
@@ -86,11 +86,11 @@ class RestaurantSerializer(serializers.ModelSerializer):
         
     def get_most_popular(self, obj):
         queryset = obj.products.filter(is_active=True, is_popular=True)
-        return ProductLessDetailSerializer(queryset, many=True, context=self.context).data
+        return ProductSerializer(queryset, many=True, context=self.context).data
     
     def get_special_offers(self, obj):
         queryset = obj.products.filter(is_active=True, is_special=True)
-        return ProductLessDetailSerializer(queryset, many=True, context=self.context).data
+        return ProductSerializer(queryset, many=True, context=self.context).data
 
 
 # WEB
