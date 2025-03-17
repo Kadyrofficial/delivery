@@ -108,7 +108,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Ensure this points to your local static folder
+    BASE_DIR / "static",
 ]
 
 # Required for production (collects all static files)
