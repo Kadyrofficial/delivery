@@ -22,7 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return getattr(obj, f'description_{lang}', obj.description_tm)
     
     def get_restaurant(self, obj):
-        return obj.slug
+        return obj.restaurant.slug
     
     def get_image(self, obj):
         request = self.context.get('request')
