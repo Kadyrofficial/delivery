@@ -34,5 +34,5 @@ class AuthSerializer(serializers.Serializer):
     email = serializers.CharField(required=False)
     phone_number = serializers.CharField(max_length=15, required=False)
     code = serializers.CharField(max_length=6, required=False)
-    password = serializers.CharField(required=False)
-    forgot_password = serializers.BooleanField(required=False)
+    # password = serializers.CharField(required=False)
+    # forgot_password = serializers.BooleanField(required=False)

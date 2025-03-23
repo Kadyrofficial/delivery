@@ -23,4 +23,3 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         return ProductSerializer
-    
