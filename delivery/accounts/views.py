@@ -38,7 +38,6 @@ class UserViewSet(viewsets.ModelViewSet):
                 if email and phone_number:
                     return Response({'message': 'Send phone_number or email, not both'}, status=status.HTTP_400_BAD_REQUEST)
                 if email:
-                    
                     if code:
                         user = User.objects.filter(email=email).first()
                         if not user:
@@ -58,7 +57,6 @@ class UserViewSet(viewsets.ModelViewSet):
                             return Response({'message': 'Code is expired'}, status=status.HTTP_400_BAD_REQUEST)
                         else:
                             return Response({'message': 'Code not found'}, status=status.HTTP_404_NOT_FOUND)
-                    
                     try:
                         code = get_random_string(length=4, allowed_chars='0123456789')
                         user, created = User.objects.get_or_create(email=email)
@@ -73,10 +71,8 @@ class UserViewSet(viewsets.ModelViewSet):
                         return Response({'email': email}, status=status.HTTP_200_OK)
                     except:
                         return Response({'error': "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
-
         if request.method == "GET":
             return Response()
-        
     def get_queryset(self):
         if self.request.user.type in [User.UserType.ADMIN]:
             return User.objects.exclude(type = User.UserType.SUPERUSER).order_by('date_joined')
