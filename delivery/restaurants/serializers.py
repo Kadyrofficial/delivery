@@ -29,7 +29,7 @@ class RestaurantSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Restaurant
-        fields = ['id', 'title', 'image', 'is_online', 'most_popular', 'special_offers']
+        fields = ['id', 'title', 'image', 'slug', 'is_online', 'most_popular', 'special_offers']
         
     def get_title(self, obj):
         request = self.context.get('request')

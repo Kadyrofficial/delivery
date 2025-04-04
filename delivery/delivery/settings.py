@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'catalogues',
     'locations',
     'banners',
+    'orders',
 ]
 
 REST_FRAMEWORK = {

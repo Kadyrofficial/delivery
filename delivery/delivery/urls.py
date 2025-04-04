@@ -9,10 +9,12 @@ from restaurants.views import RestaurantViewSet
 from products.views import ProductViewSet
 from banners.views import AppBannerViewSet
 from locations.views import LocationViewSet
+from orders.views import OrderViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'accounts', UserViewSet, basename='accounts')
+router.register(r'orders', OrderViewSet, basename='orders')
 router.register(r'banners', AppBannerViewSet, basename='banners')
 router.register(r'restaurants', RestaurantViewSet, basename='restaurants')
 router.register(r'products', ProductViewSet, basename='products')
