@@ -80,6 +80,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.set_password(self.new_password)
             self.new_password = None
         if self.type == self.UserType.CLIENT:
+            super().save(*args, **kwargs)
             if self.restaurant.exists():
                 for restaurant in self.restaurant.all():
                     restaurant.save()
