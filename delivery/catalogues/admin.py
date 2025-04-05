@@ -8,11 +8,11 @@ class ProductInline(admin.StackedInline):
     extra = 1
 
 class CatalogueAdmin(admin.ModelAdmin):
-    list_display = ["id", "title_tm", "title_ru", 'original_image']
-    list_editable = ["title_tm", "title_ru", 'original_image']
+    list_display = ["id", "title_tm", "title_ru"]
+    list_editable = ["title_tm", "title_ru"]
     fieldsets = (
         ("Title", {"fields": ("title_tm", "title_ru")}),
-        ("Details", {"fields": ("original_image", "restaurant")}),
+        ("Details", {"fields": ("restaurant",  )}),
     )
     readonly_fields = ("restaurant", )
     inlines = [ProductInline]
