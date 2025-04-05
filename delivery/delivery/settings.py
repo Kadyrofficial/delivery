@@ -89,10 +89,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'delivery.wsgi.application'
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'delivery',
+        'USER': 'postgres',
+        'PASSWORD': '@Kadyr1401',
+        'HOST': '77.232.129.241',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',  # Add this line if SSL is enabled on your PostgreSQL server
+        },
     }
 }
 
