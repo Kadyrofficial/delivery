@@ -10,8 +10,7 @@ class UserAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'phone_number')}),
         ('Info', {'fields': ('first_name', 'last_name')}),
-        ('Address', {'fields': ('location', 'address')}),
-        ('Details', {'fields': ('type', 'password', 'new_password', 'is_active', 'date_joined')}),
+        ('Details', {'fields': ('type', 'new_password', 'is_active', 'date_joined')}),
     )
     readonly_fields = ('date_joined', 'password')
     search_fields = ('email', 'phone_number', 'first_name', 'last_name')
