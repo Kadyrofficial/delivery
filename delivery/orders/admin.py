@@ -10,7 +10,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ["id", "user", "status", "total_price"]
     list_editable = ["status"]
     fieldsets = (
-        ("Details", {"fields": ("user", "total_price")}),
+        ("Details", {"fields": ("user", "total_price", "location", "address")}),
     )
     list_filter = ("status", )
     search_fields = ["user"]

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Order, OrderItem
 from products.serializers import ProductSerializer
 from products.models import Product
+from locations.models import Address, Location
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
@@ -26,10 +27,14 @@ class AddOrderSerializer(serializers.Serializer):
     order_item = serializers.ListField(child=OrderItemInputSerializer())
 
     def create(self, validated_data):
-        user = self.context['request'].user
+        request = self.context['request']
+        user = request.user
+        location_id = request.headers.get('Location')
         items_data = validated_data.pop('order_item')
-
-        order = Order.objects.create(user=user)
+        address_data = request.data.get('address')
+        location = Location.objects.get(id=location_id)
+        address = Address.objects.create(title=address_data, location=location)
+        order = Order.objects.create(user=user, location=location, address=address)
 
         for item in items_data:
             product = item['product']

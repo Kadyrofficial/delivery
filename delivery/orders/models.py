@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import User
 from products.models import Product
 from decimal import Decimal
-from django.core.mail import send_mail
+from locations.models import Location, Address
 
 
 class Order(models.Model):
@@ -15,7 +15,9 @@ class Order(models.Model):
     user = models.ForeignKey(User, verbose_name="User of the order", on_delete=models.CASCADE, related_name='order')
     status = models.CharField(choices=Status, max_length=100, default=Status.INACTIVE)
     total_price = models.DecimalField(max_digits=15, decimal_places=2, editable=False, blank=True, null=True)
-
+    location = models.ForeignKey(Location, verbose_name="Location", on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, verbose_name="Address", on_delete=models.CASCADE)
+    
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.update_price()
