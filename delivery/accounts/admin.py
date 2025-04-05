@@ -1,12 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from .models import User
-from restaurants.models import Restaurant
 
-
-class RestaurantInline(admin.TabularInline):
-    model = Restaurant
-    extra = 1
     
 class UserAdmin(admin.ModelAdmin):
     list_display = ("id", "email", "phone_number", "first_name", "last_name")
@@ -19,7 +14,6 @@ class UserAdmin(admin.ModelAdmin):
         ('Details', {'fields': ('type', 'password', 'new_password', 'is_active', 'date_joined')}),
     )
     readonly_fields = ('date_joined', 'password')
-    inlines = [RestaurantInline]
     search_fields = ('email', 'phone_number', 'first_name', 'last_name')
 
 admin.site.register(User, UserAdmin)
