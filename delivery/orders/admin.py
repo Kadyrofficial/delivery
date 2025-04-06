@@ -7,10 +7,10 @@ class OrderItemInline(admin.StackedInline):
     extra = 1
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "status", "total_price"]
-    list_editable = ["status"]
+    list_display = ["id", "user", "status", "delivery", "total_price"]
+    list_editable = ["status", "delivery"]
     fieldsets = (
-        ("Details", {"fields": ("user", "total_price", "location", "address")}),
+        ("Details", {"fields": ("user", "total_price", "delivery", "location", "address")}),
     )
     list_filter = ("status", )
     search_fields = ["user"]
