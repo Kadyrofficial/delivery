@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.db import transaction
 from .models import Order
 from .serializers import AddOrderSerializer, OrderSerializer
+from django.core.mail import send_mail
 
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -28,10 +29,23 @@ class OrderViewSet(viewsets.ModelViewSet):
     def add(self, request):
         serializer = AddOrderSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            order = serializer.save()
-            return Response({
-                'message': 'Order created successfully.',
-                'order_id': order.id
-            }, status=status.HTTP_201_CREATED)
+            try:
+                user = request.user
+                send_mail(
+                    subject='New Order',
+                    message=f'A new order is created by {user.email}',
+                    from_email='kadyr.gullyyew@gmail.com',
+                    recipient_list=['Gullyyevk@gmail.com'],
+                    fail_silently=False,
+                )
+                order = serializer.save()
+                return Response({
+                    'message': 'Order created successfully.',
+                    'order_id': order.id
+                }, status=status.HTTP_201_CREATED)
+            except:
+                return Response({
+                    'message': 'Order created successfully.'
+                }, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
