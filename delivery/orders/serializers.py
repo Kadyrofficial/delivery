@@ -11,7 +11,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = OrderItem
-        fields = ['id', 'product', 'quantity']
+        fields = ['id', 'product', 'status', 'quantity']
     
     def get_status(self, obj):
         return obj.order.status
