@@ -7,10 +7,14 @@ from locations.models import Address, Location
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
+    status = serializers.SerializerMethodField()
+    
     class Meta:
         model = OrderItem
-        fields = ['id', 'product', 'quantity', 'total_price']
-
+        fields = ['id', 'product', 'quantity']
+    
+    def get_status(self, obj):
+        return obj.order.status
 
 class OrderSerializer(serializers.ModelSerializer):
     order_item = OrderItemSerializer(many=True, read_only=True)
