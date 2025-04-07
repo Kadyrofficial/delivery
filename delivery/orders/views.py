@@ -21,6 +21,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         return OrderItem.objects.filter(user=self.request.user)
 
     def get_serializer(self, *args, **kwargs):
+        kwargs['context'] = self.get_serializer_context()
         return self.serializer_class(*args, **kwargs)
 
     @action(methods=['post'], detail=False, url_path='add')
