@@ -6,24 +6,21 @@ from django.db import transaction
 from .models import Order
 from .serializers import AddOrderSerializer, OrderSerializer
 from django.core.mail import send_mail
+from rest_framework.pagination import PageNumberPagination
 
 
+class Pagination(PageNumberPagination):
+    page_size_query_param = 'page_size'
+    
 class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
-
+    pagination_class = Pagination
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
 
     def get_serializer(self, *args, **kwargs):
         return self.serializer_class(*args, **kwargs)
-
-    @action(methods=['get'], detail=False, url_path='view')
-    def view(self, request):
-        user = request.user
-        queryset = Order.objects.filter(user=user)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=False, url_path='add')
     @transaction.atomic
