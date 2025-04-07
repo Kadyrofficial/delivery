@@ -17,7 +17,7 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = ['id', 'total_price', 'order_item']
+        fields = ['id', 'total_price', 'status', 'order_item']
 
 class OrderItemInputSerializer(serializers.Serializer):
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())

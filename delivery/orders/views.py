@@ -20,7 +20,8 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=False, url_path='view')
     def view(self, request):
-        queryset = self.get_queryset()
+        user = request.user
+        queryset = Order.objects.filter(user=user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
