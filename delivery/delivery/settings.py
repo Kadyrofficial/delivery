@@ -145,4 +145,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kadyr.gullyyew@gmail.com'
-EMAIL_HOST_PASSWORD = 'skex iuxm tjkk pnvw'
+EMAIL_HOST_PASSWORD = 'reyq mhss jxxn wwwf'
