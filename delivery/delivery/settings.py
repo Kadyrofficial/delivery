@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'locations',
     'banners',
     'orders',
+    'channels',
 ]
 
 REST_FRAMEWORK = {
@@ -43,6 +44,8 @@ REST_FRAMEWORK = {
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # )
 }
+
+ASGI_APPLICATION = 'delivery.asgi.application'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=365),
